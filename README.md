@@ -43,14 +43,14 @@ Run ID: renewable-energy-conferences-2027
 Find public conferences about renewable energy in Europe between
 2027-01-01 and 2027-06-30.
 
-Search languages: English, German, French
-Output language: English
+Search languages: en, de, fr
+Output language: en
 Result limit: 20 conferences
 Attendee mode: public-only
 
 Collect aggregator listings and direct conference sources. Extract people,
 committees, schedules, registration, venues, sponsors, events, hotels, and
-public attendee facts. Freeze each stage before continuing.
+public aggregate attendance facts. Freeze each stage before continuing.
 ```
 
 The LLM creates:
@@ -75,8 +75,8 @@ Read AGENTS.md and PROJECT_MEMORY.md before starting.
 Mode: discovery_only
 Run ID: public-health-discovery-2027
 Objective: Find public-health conferences in North America during 2027.
-Search languages: English, French
-Output language: English
+Search languages: en, fr
+Output language: en
 Result limit: 50
 Attendee mode: disabled
 
@@ -208,6 +208,9 @@ Do not hard-code an aggregator or conference. If web access is unavailable, reco
 - Reports cite stable source IDs such as `[S001]`.
 - Reports use `[A001]` only for observed-listing claims.
 - Reports state `Insufficient evidence` when artifacts cannot support a claim.
+- Normalized scalar values must reconcile with their raw evidence pointers or a recorded translation.
+- Human-readable report and quality statements must reconcile with normalized JSON, including extra names, dates, counts, roles, URLs, conflicts, and privacy checks.
+- Refresh narratives must identify an actual changed field or collection and cannot present an earlier value as the current result.
 
 ## Privacy
 

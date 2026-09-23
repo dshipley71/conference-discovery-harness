@@ -1,0 +1,740 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://conference-discovery-harness.example.invalid/schemas/raw-conference-data.schema.json",
+  "title": "Conference Discovery Harness Raw Conference Data",
+  "description": "Schema for RAW_CONFERENCES.json. Raw values preserve reviewed source wording and explicit collection gaps.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "artifact",
+    "data_classification",
+    "template_notice",
+    "run_metadata",
+    "sources",
+    "conferences"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "artifact": {
+      "const": "RAW_CONFERENCES.json"
+    },
+    "data_classification": {
+      "$ref": "#/$defs/dataClassification"
+    },
+    "template_notice": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "run_metadata": {
+      "$ref": "#/$defs/runMetadata"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sourceRecord"
+      }
+    },
+    "conferences": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/rawConference"
+      }
+    }
+  },
+  "$defs": {
+    "dataClassification": {
+      "enum": [
+        "live-research",
+        "illustrative-template",
+        "synthetic-test-fixture"
+      ]
+    },
+    "runId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "mode": {
+      "enum": [
+        "full",
+        "discovery_only",
+        "refresh"
+      ]
+    },
+    "attendeeMode": {
+      "enum": [
+        "public-only",
+        "user-authorized-input",
+        "disabled"
+      ]
+    },
+    "collectionStatus": {
+      "enum": [
+        "complete",
+        "partial",
+        "not-published",
+        "not-applicable",
+        "inaccessible",
+        "not-authorized",
+        "unresolved"
+      ]
+    },
+    "conferenceId": {
+      "type": "string",
+      "pattern": "^C[0-9]{3,}$"
+    },
+    "sourceId": {
+      "type": "string",
+      "pattern": "^(?:A|S)[0-9]{3,}$"
+    },
+    "runMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_id",
+        "mode",
+        "source_run_id",
+        "objective",
+        "extracted_at",
+        "attendee_mode",
+        "output_language",
+        "input_artifacts"
+      ],
+      "properties": {
+        "run_id": {
+          "$ref": "#/$defs/runId"
+        },
+        "mode": {
+          "$ref": "#/$defs/mode"
+        },
+        "source_run_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/runId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "objective": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extracted_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "attendee_mode": {
+          "$ref": "#/$defs/attendeeMode"
+        },
+        "output_language": {
+          "type": "string",
+          "minLength": 2
+        },
+        "input_artifacts": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "REQUEST.md",
+              "AGGREGATORS.md",
+              "CONFERENCE_SOURCES.md"
+            ]
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "refresh"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "source_run_id": {
+                "$ref": "#/$defs/runId"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "source_run_id": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "authorizationBasis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "basis",
+        "description",
+        "source_ids",
+        "authorization_record"
+      ],
+      "properties": {
+        "basis": {
+          "enum": [
+            "intentionally-public",
+            "user-authorized-input",
+            "not-authorized",
+            "unresolved"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sourceId"
+          }
+        },
+        "authorization_record": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "rawValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "source_url",
+        "captured_at",
+        "capture_method",
+        "raw_text",
+        "language",
+        "observed_value",
+        "authorization_basis",
+        "notes"
+      ],
+      "properties": {
+        "source_id": {
+          "$ref": "#/$defs/sourceId"
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "captured_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "capture_method": {
+          "enum": [
+            "verbatim",
+            "bounded-excerpt",
+            "faithful-summary",
+            "structured-value"
+          ]
+        },
+        "raw_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "language": {
+          "type": "string",
+          "minLength": 2
+        },
+        "observed_value": {},
+        "authorization_basis": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/authorizationBasis"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "rawBranch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "collection_status",
+        "raw_values",
+        "notes"
+      ],
+      "properties": {
+        "collection_status": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "raw_values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/rawValue"
+          }
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "collection_status": {
+                "enum": [
+                  "complete",
+                  "partial"
+                ]
+              }
+            },
+            "required": [
+              "collection_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "raw_values": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "branchSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity_and_aliases",
+        "series_edition_and_acronym",
+        "organizers",
+        "description_themes_topics_type_and_languages",
+        "dates_times_timezone_recurrence_and_status",
+        "websites_and_event_urls",
+        "people_and_public_contacts",
+        "committees_and_roles",
+        "schedule_tracks_sessions_workshops_and_social_events",
+        "registration",
+        "venue",
+        "sponsors_exhibitors_and_partners",
+        "hotels_and_booking",
+        "attendees_and_attendance",
+        "provenance",
+        "confidence",
+        "contradictions",
+        "unresolved_fields"
+      ],
+      "properties": {
+        "identity_and_aliases": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "series_edition_and_acronym": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "organizers": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "description_themes_topics_type_and_languages": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "dates_times_timezone_recurrence_and_status": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "websites_and_event_urls": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "people_and_public_contacts": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "committees_and_roles": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "schedule_tracks_sessions_workshops_and_social_events": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "registration": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "venue": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "sponsors_exhibitors_and_partners": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "hotels_and_booking": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "attendees_and_attendance": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "provenance": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "confidence": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "contradictions": {
+          "$ref": "#/$defs/rawBranch"
+        },
+        "unresolved_fields": {
+          "$ref": "#/$defs/rawBranch"
+        }
+      }
+    },
+    "fieldProvenanceEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ids",
+        "raw_evidence_pointers",
+        "note"
+      ],
+      "properties": {
+        "source_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sourceId"
+          }
+        },
+        "raw_evidence_pointers": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^/"
+          }
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "fieldProvenanceMap": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^/"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/fieldProvenanceEntry"
+      }
+    },
+    "contradiction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "field_or_branch",
+        "values",
+        "resolution_status",
+        "note"
+      ],
+      "properties": {
+        "field_or_branch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "values": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "raw_text",
+              "source_ids"
+            ],
+            "properties": {
+              "raw_text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_ids": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/sourceId"
+                }
+              }
+            }
+          }
+        },
+        "resolution_status": {
+          "enum": [
+            "resolved",
+            "unresolved"
+          ]
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "unresolvedField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "json_pointer",
+        "reason",
+        "source_ids"
+      ],
+      "properties": {
+        "json_pointer": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sourceId"
+          }
+        }
+      }
+    },
+    "sourceRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_kind",
+        "candidate_conference_id",
+        "candidate_conference",
+        "source_class",
+        "title",
+        "publisher_or_owner",
+        "public_url",
+        "publication_or_update_date",
+        "access_date",
+        "conference_relationship",
+        "bounded_excerpt_or_faithful_summary",
+        "supported_fields_or_claims",
+        "reliability",
+        "independence",
+        "limitations",
+        "review_state",
+        "extraction_eligibility"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/sourceId"
+        },
+        "source_kind": {
+          "enum": [
+            "aggregator",
+            "direct"
+          ]
+        },
+        "candidate_conference_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/conferenceId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "candidate_conference": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_class": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "publisher_or_owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "public_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "publication_or_update_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "access_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "conference_relationship": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bounded_excerpt_or_faithful_summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "supported_fields_or_claims": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "identity",
+              "series",
+              "organizers",
+              "description",
+              "dates",
+              "official-url",
+              "people",
+              "committees",
+              "schedule",
+              "registration",
+              "venue",
+              "sponsors",
+              "hotels",
+              "attendance",
+              "provenance",
+              "confidence",
+              "contradictions",
+              "unresolved-fields"
+            ]
+          }
+        },
+        "reliability": {
+          "enum": [
+            "high",
+            "medium",
+            "low",
+            "unresolved"
+          ]
+        },
+        "independence": {
+          "enum": [
+            "first-party",
+            "independent-direct",
+            "syndicated",
+            "unresolved"
+          ]
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "review_state": {
+          "enum": [
+            "reviewed",
+            "partially-reviewed",
+            "inaccessible",
+            "removed",
+            "paywalled",
+            "unresolved"
+          ]
+        },
+        "extraction_eligibility": {
+          "enum": [
+            "eligible",
+            "limited",
+            "ineligible"
+          ]
+        }
+      }
+    },
+    "rawConference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "candidate_key",
+        "candidate_names",
+        "branches",
+        "source_ids",
+        "field_provenance",
+        "contradictions",
+        "unresolved_fields"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/conferenceId"
+        },
+        "candidate_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "candidate_names": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "branches": {
+          "$ref": "#/$defs/branchSet"
+        },
+        "source_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sourceId"
+          }
+        },
+        "field_provenance": {
+          "$ref": "#/$defs/fieldProvenanceMap"
+        },
+        "contradictions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/contradiction"
+          }
+        },
+        "unresolved_fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unresolvedField"
+          }
+        }
+      }
+    }
+  }
+}

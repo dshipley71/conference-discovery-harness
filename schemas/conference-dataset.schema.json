@@ -1,0 +1,3152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://conference-discovery-harness.example.invalid/schemas/conference-dataset.schema.json",
+  "title": "Conference Discovery Harness Normalized Dataset",
+  "description": "Schema for NORMALIZED_CONFERENCES.json with normalized entities, field-level provenance, translations, authorization, resolution decisions, and quality metrics.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "artifact",
+    "data_classification",
+    "template_notice",
+    "run_metadata",
+    "conferences",
+    "conference_series",
+    "organizations",
+    "people",
+    "venues",
+    "sessions_and_events",
+    "registration_offers",
+    "sponsors_and_partnerships",
+    "hotels",
+    "attendee_records_or_aggregates",
+    "sources",
+    "translations",
+    "entity_resolution_decisions",
+    "alias_redirects",
+    "quality_metrics"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "artifact": {
+      "const": "NORMALIZED_CONFERENCES.json"
+    },
+    "data_classification": {
+      "$ref": "#/$defs/dataClassification"
+    },
+    "template_notice": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "run_metadata": {
+      "$ref": "#/$defs/runMetadata"
+    },
+    "conferences": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/conference"
+      }
+    },
+    "conference_series": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/conferenceSeries"
+      }
+    },
+    "organizations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/organization"
+      }
+    },
+    "people": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/person"
+      }
+    },
+    "venues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/venue"
+      }
+    },
+    "sessions_and_events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sessionEvent"
+      }
+    },
+    "registration_offers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/registrationOffer"
+      }
+    },
+    "sponsors_and_partnerships": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sponsorPartnership"
+      }
+    },
+    "hotels": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/hotel"
+      }
+    },
+    "attendee_records_or_aggregates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/attendeeRecord"
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "translations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/translation"
+      }
+    },
+    "entity_resolution_decisions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entityResolutionDecision"
+      }
+    },
+    "alias_redirects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/aliasRedirect"
+      }
+    },
+    "quality_metrics": {
+      "$ref": "#/$defs/qualityMetrics"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "run_metadata": {
+            "properties": {
+              "attendee_mode": {
+                "const": "disabled"
+              }
+            },
+            "required": [
+              "attendee_mode"
+            ]
+          }
+        },
+        "required": [
+          "run_metadata"
+        ]
+      },
+      "then": {
+        "properties": {
+          "attendee_records_or_aggregates": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "run_metadata": {
+            "properties": {
+              "attendee_mode": {
+                "const": "public-only"
+              }
+            },
+            "required": [
+              "attendee_mode"
+            ]
+          }
+        },
+        "required": [
+          "run_metadata"
+        ]
+      },
+      "then": {
+        "properties": {
+          "attendee_records_or_aggregates": {
+            "items": {
+              "properties": {
+                "authorization_basis": {
+                  "properties": {
+                    "basis": {
+                      "const": "intentionally-public"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "run_metadata": {
+            "properties": {
+              "attendee_mode": {
+                "const": "user-authorized-input"
+              }
+            },
+            "required": [
+              "attendee_mode"
+            ]
+          }
+        },
+        "required": [
+          "run_metadata"
+        ]
+      },
+      "then": {
+        "properties": {
+          "attendee_records_or_aggregates": {
+            "items": {
+              "properties": {
+                "authorization_basis": {
+                  "properties": {
+                    "basis": {
+                      "enum": [
+                        "intentionally-public",
+                        "user-authorized-input"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "dataClassification": {
+      "enum": [
+        "live-research",
+        "illustrative-template",
+        "synthetic-test-fixture"
+      ]
+    },
+    "runId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "mode": {
+      "enum": [
+        "full",
+        "discovery_only",
+        "refresh"
+      ]
+    },
+    "attendeeMode": {
+      "enum": [
+        "public-only",
+        "user-authorized-input",
+        "disabled"
+      ]
+    },
+    "collectionStatus": {
+      "enum": [
+        "complete",
+        "partial",
+        "not-published",
+        "not-applicable",
+        "inaccessible",
+        "not-authorized",
+        "unresolved"
+      ]
+    },
+    "conferenceId": {
+      "type": "string",
+      "pattern": "^C[0-9]{3,}$"
+    },
+    "conferenceSeriesId": {
+      "type": "string",
+      "pattern": "^CS[0-9]{3,}$"
+    },
+    "organizationId": {
+      "type": "string",
+      "pattern": "^O[0-9]{3,}$"
+    },
+    "personId": {
+      "type": "string",
+      "pattern": "^P[0-9]{3,}$"
+    },
+    "venueId": {
+      "type": "string",
+      "pattern": "^V[0-9]{3,}$"
+    },
+    "sessionEventId": {
+      "type": "string",
+      "pattern": "^E[0-9]{3,}$"
+    },
+    "registrationOfferId": {
+      "type": "string",
+      "pattern": "^R[0-9]{3,}$"
+    },
+    "sponsorPartnershipId": {
+      "type": "string",
+      "pattern": "^SP[0-9]{3,}$"
+    },
+    "hotelId": {
+      "type": "string",
+      "pattern": "^H[0-9]{3,}$"
+    },
+    "attendeeId": {
+      "type": "string",
+      "pattern": "^AT[0-9]{3,}$"
+    },
+    "sourceId": {
+      "type": "string",
+      "pattern": "^(?:A|S)[0-9]{3,}$"
+    },
+    "translationId": {
+      "type": "string",
+      "pattern": "^T[0-9]{3,}$"
+    },
+    "entityResolutionId": {
+      "type": "string",
+      "pattern": "^ER[0-9]{3,}$"
+    },
+    "anyEntityId": {
+      "type": "string",
+      "pattern": "^(?:C|CS|O|P|V|E|R|SP|H|AT|A|S|T|ER)[0-9]{3,}$"
+    },
+    "nullableString": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sourceIdArray": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/sourceId"
+      }
+    },
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "level",
+        "rationale"
+      ],
+      "properties": {
+        "level": {
+          "enum": [
+            "high",
+            "medium",
+            "low",
+            "unresolved"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "authorizationBasis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "basis",
+        "description",
+        "source_ids",
+        "authorization_record"
+      ],
+      "properties": {
+        "basis": {
+          "enum": [
+            "intentionally-public",
+            "user-authorized-input",
+            "not-authorized",
+            "unresolved"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sourceId"
+          }
+        },
+        "authorization_record": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "basis": {
+                "const": "intentionally-public"
+              }
+            },
+            "required": [
+              "basis"
+            ]
+          },
+          "then": {
+            "properties": {
+              "source_ids": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "basis": {
+                "const": "user-authorized-input"
+              }
+            },
+            "required": [
+              "basis"
+            ]
+          },
+          "then": {
+            "properties": {
+              "authorization_record": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "collectedDataAuthorizationBasis": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/authorizationBasis"
+        },
+        {
+          "properties": {
+            "basis": {
+              "enum": [
+                "intentionally-public",
+                "user-authorized-input"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "fieldProvenanceEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ids",
+        "raw_artifact_pointers",
+        "note"
+      ],
+      "properties": {
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "raw_artifact_pointers": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^/"
+          }
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "fieldProvenanceMap": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^/"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/fieldProvenanceEntry"
+      }
+    },
+    "publicContact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contact_type",
+        "value",
+        "authorization_basis",
+        "source_ids"
+      ],
+      "properties": {
+        "contact_type": {
+          "enum": [
+            "business-email",
+            "business-telephone",
+            "public-contact-page"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authorization_basis": {
+          "$ref": "#/$defs/collectedDataAuthorizationBasis"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        }
+      }
+    },
+    "entityReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entity_type",
+        "entity_id"
+      ],
+      "properties": {
+        "entity_type": {
+          "enum": [
+            "conference",
+            "conference-series",
+            "organization",
+            "person",
+            "venue",
+            "session-event",
+            "registration-offer",
+            "sponsor-partnership",
+            "hotel",
+            "attendee",
+            "source",
+            "translation",
+            "entity-resolution-decision"
+          ]
+        },
+        "entity_id": {
+          "$ref": "#/$defs/anyEntityId"
+        }
+      }
+    },
+    "runMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_id",
+        "mode",
+        "source_run_id",
+        "objective",
+        "normalized_at",
+        "attendee_mode",
+        "output_language",
+        "raw_artifact",
+        "source_artifacts"
+      ],
+      "properties": {
+        "run_id": {
+          "$ref": "#/$defs/runId"
+        },
+        "mode": {
+          "$ref": "#/$defs/mode"
+        },
+        "source_run_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/runId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "objective": {
+          "type": "string",
+          "minLength": 1
+        },
+        "normalized_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "attendee_mode": {
+          "$ref": "#/$defs/attendeeMode"
+        },
+        "output_language": {
+          "type": "string",
+          "minLength": 2
+        },
+        "raw_artifact": {
+          "const": "RAW_CONFERENCES.json"
+        },
+        "source_artifacts": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "AGGREGATORS.md",
+              "CONFERENCE_SOURCES.md",
+              "RAW_CONFERENCES.json"
+            ]
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "refresh"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "source_run_id": {
+                "$ref": "#/$defs/runId"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "source_run_id": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "collectionStatuses": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity_and_aliases",
+        "series_edition_and_acronym",
+        "organizers",
+        "description_themes_topics_type_and_languages",
+        "dates_times_timezone_recurrence_and_status",
+        "websites_and_event_urls",
+        "people_and_public_contacts",
+        "committees_and_roles",
+        "schedule_tracks_sessions_workshops_and_social_events",
+        "registration",
+        "venue",
+        "sponsors_exhibitors_and_partners",
+        "hotels_and_booking",
+        "attendees_and_attendance",
+        "provenance",
+        "confidence",
+        "contradictions",
+        "unresolved_fields"
+      ],
+      "properties": {
+        "identity_and_aliases": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "series_edition_and_acronym": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "organizers": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "description_themes_topics_type_and_languages": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "dates_times_timezone_recurrence_and_status": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "websites_and_event_urls": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "people_and_public_contacts": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "committees_and_roles": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "schedule_tracks_sessions_workshops_and_social_events": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "registration": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "venue": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "sponsors_exhibitors_and_partners": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "hotels_and_booking": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "attendees_and_attendance": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "provenance": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "confidence": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "contradictions": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "unresolved_fields": {
+          "$ref": "#/$defs/collectionStatus"
+        }
+      }
+    },
+    "committeeMembership": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "committee_name",
+        "person_id",
+        "organization_id",
+        "role",
+        "source_ids"
+      ],
+      "properties": {
+        "committee_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "person_id": {
+          "$ref": "#/$defs/personId"
+        },
+        "organization_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/organizationId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        }
+      }
+    },
+    "contradiction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "json_pointer",
+        "values",
+        "source_ids",
+        "resolution"
+      ],
+      "properties": {
+        "json_pointer": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "values": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "resolution": {
+          "enum": [
+            "resolved",
+            "unresolved"
+          ]
+        }
+      }
+    },
+    "unresolvedField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "json_pointer",
+        "condition",
+        "reason",
+        "source_ids"
+      ],
+      "properties": {
+        "json_pointer": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "condition": {
+          "enum": [
+            "unknown",
+            "not-applicable",
+            "not-published",
+            "inaccessible",
+            "not-authorized",
+            "unresolved-conflict"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sourceId"
+          }
+        }
+      }
+    },
+    "conference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "canonical_name",
+        "aliases",
+        "series_id",
+        "edition",
+        "acronym",
+        "organizer_ids",
+        "description",
+        "themes",
+        "topics",
+        "conference_type",
+        "language_codes",
+        "start_date",
+        "end_date",
+        "start_time",
+        "end_time",
+        "timezone",
+        "recurrence",
+        "event_status",
+        "official_url",
+        "event_urls",
+        "person_ids",
+        "committee_memberships",
+        "session_event_ids",
+        "registration_offer_ids",
+        "venue_ids",
+        "partnership_ids",
+        "hotel_ids",
+        "attendee_record_ids",
+        "intended_audience",
+        "listing_source_ids",
+        "source_ids",
+        "translation_ids",
+        "entity_resolution_decision_ids",
+        "collection_statuses",
+        "confidence",
+        "contradictions",
+        "unresolved_fields",
+        "field_provenance"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/conferenceId"
+        },
+        "canonical_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliases": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "series_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/conferenceSeriesId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "edition": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "acronym": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "organizer_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/organizationId"
+          }
+        },
+        "description": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "themes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "topics": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "conference_type": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "language_codes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z]{2,3}(?:-[A-Z][A-Za-z0-9]{1,7})*$"
+          }
+        },
+        "start_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "end_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "start_time": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "time"
+        },
+        "end_time": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "time"
+        },
+        "timezone": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "recurrence": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "event_status": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "official_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "event_urls": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "person_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/personId"
+          }
+        },
+        "committee_memberships": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/committeeMembership"
+          }
+        },
+        "session_event_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sessionEventId"
+          }
+        },
+        "registration_offer_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/registrationOfferId"
+          }
+        },
+        "venue_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/venueId"
+          }
+        },
+        "partnership_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sponsorPartnershipId"
+          }
+        },
+        "hotel_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/hotelId"
+          }
+        },
+        "attendee_record_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/attendeeId"
+          }
+        },
+        "intended_audience": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "listing_source_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^A[0-9]{3,}$"
+          }
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "translation_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/translationId"
+          }
+        },
+        "entity_resolution_decision_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/entityResolutionId"
+          }
+        },
+        "collection_statuses": {
+          "$ref": "#/$defs/collectionStatuses"
+        },
+        "confidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "contradictions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/contradiction"
+          }
+        },
+        "unresolved_fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unresolvedField"
+          }
+        },
+        "field_provenance": {
+          "$ref": "#/$defs/fieldProvenanceMap"
+        }
+      }
+    },
+    "conferenceSeries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "canonical_name",
+        "aliases",
+        "acronym",
+        "organizer_ids",
+        "conference_ids",
+        "source_ids",
+        "field_provenance"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/conferenceSeriesId"
+        },
+        "canonical_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliases": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "acronym": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "organizer_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/organizationId"
+          }
+        },
+        "conference_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/conferenceId"
+          }
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "field_provenance": {
+          "$ref": "#/$defs/fieldProvenanceMap"
+        }
+      }
+    },
+    "organization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "canonical_name",
+        "aliases",
+        "organization_types",
+        "official_url",
+        "public_contacts",
+        "source_ids",
+        "field_provenance"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/organizationId"
+        },
+        "canonical_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliases": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "organization_types": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "organizer",
+              "sponsor",
+              "exhibitor",
+              "partner",
+              "venue-operator",
+              "hotel",
+              "employer",
+              "other"
+            ]
+          }
+        },
+        "official_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "public_contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/publicContact"
+          }
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "field_provenance": {
+          "$ref": "#/$defs/fieldProvenanceMap"
+        }
+      }
+    },
+    "conferenceRole": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "conference_id",
+        "role",
+        "source_ids"
+      ],
+      "properties": {
+        "conference_id": {
+          "$ref": "#/$defs/conferenceId"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        }
+      }
+    },
+    "person": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "public_professional_role",
+        "organization_ids",
+        "job_title",
+        "official_biography",
+        "conference_roles",
+        "business_contacts",
+        "source_ids",
+        "field_provenance"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/personId"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "public_professional_role": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "organization_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/organizationId"
+          }
+        },
+        "job_title": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "official_biography": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "conference_roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/conferenceRole"
+          }
+        },
+        "business_contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/publicContact"
+          }
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "field_provenance": {
+          "$ref": "#/$defs/fieldProvenanceMap"
+        }
+      }
+    },
+    "venueConferenceRelationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "conference_id",
+        "relationship",
+        "start_date",
+        "end_date",
+        "source_ids"
+      ],
+      "properties": {
+        "conference_id": {
+          "$ref": "#/$defs/conferenceId"
+        },
+        "relationship": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "end_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        }
+      }
+    },
+    "venue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "canonical_name",
+        "aliases",
+        "venue_type",
+        "postal_address",
+        "locality",
+        "administrative_area",
+        "country",
+        "postal_code",
+        "latitude",
+        "longitude",
+        "official_website",
+        "public_telephone",
+        "public_email",
+        "public_contact_page",
+        "public_map_url",
+        "rooms_or_buildings",
+        "accessibility_notes",
+        "transport_notes",
+        "conference_relationships",
+        "collection_status",
+        "source_ids",
+        "field_provenance"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/venueId"
+        },
+        "canonical_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliases": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "venue_type": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "postal_address": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "locality": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "administrative_area": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "country": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "postal_code": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "latitude": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": -90,
+          "maximum": 90
+        },
+        "longitude": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": -180,
+          "maximum": 180
+        },
+        "official_website": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "public_telephone": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/publicContact"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "public_email": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/publicContact"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "public_contact_page": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/publicContact"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "public_map_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "rooms_or_buildings": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "accessibility_notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "transport_notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "conference_relationships": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/venueConferenceRelationship"
+          }
+        },
+        "collection_status": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "field_provenance": {
+          "$ref": "#/$defs/fieldProvenanceMap"
+        }
+      }
+    },
+    "sessionEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "conference_id",
+        "parent_event_id",
+        "event_type",
+        "track",
+        "title",
+        "description",
+        "start_at",
+        "end_at",
+        "timezone",
+        "speaker_ids",
+        "organizer_ids",
+        "venue_id",
+        "room",
+        "public_url",
+        "collection_status",
+        "source_ids",
+        "field_provenance"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/sessionEventId"
+        },
+        "conference_id": {
+          "$ref": "#/$defs/conferenceId"
+        },
+        "parent_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sessionEventId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_type": {
+          "enum": [
+            "track",
+            "session",
+            "workshop",
+            "social-event",
+            "other-subevent"
+          ]
+        },
+        "track": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "start_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "end_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "timezone": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "speaker_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/personId"
+          }
+        },
+        "organizer_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/organizationId"
+          }
+        },
+        "venue_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/venueId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "room": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "public_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "collection_status": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "field_provenance": {
+          "$ref": "#/$defs/fieldProvenanceMap"
+        }
+      }
+    },
+    "money": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "amount",
+        "currency",
+        "raw_text"
+      ],
+      "properties": {
+        "amount": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "currency": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[A-Z]{3}$"
+        },
+        "raw_text": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "registrationDeadline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "deadline_type",
+        "date",
+        "raw_text"
+      ],
+      "properties": {
+        "deadline_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "raw_text": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "registrationOffer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "conference_id",
+        "registration_status",
+        "ticket_class",
+        "deadlines",
+        "price",
+        "eligibility",
+        "registration_url",
+        "collection_status",
+        "source_ids",
+        "field_provenance"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/registrationOfferId"
+        },
+        "conference_id": {
+          "$ref": "#/$defs/conferenceId"
+        },
+        "registration_status": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "ticket_class": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "deadlines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/registrationDeadline"
+          }
+        },
+        "price": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/money"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eligibility": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "registration_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "collection_status": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "field_provenance": {
+          "$ref": "#/$defs/fieldProvenanceMap"
+        }
+      }
+    },
+    "sponsorPartnership": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "conference_id",
+        "organization_id",
+        "relationship_type",
+        "tier",
+        "official_url",
+        "collection_status",
+        "source_ids",
+        "field_provenance"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/sponsorPartnershipId"
+        },
+        "conference_id": {
+          "$ref": "#/$defs/conferenceId"
+        },
+        "organization_id": {
+          "$ref": "#/$defs/organizationId"
+        },
+        "relationship_type": {
+          "enum": [
+            "sponsor",
+            "exhibitor",
+            "partner"
+          ]
+        },
+        "tier": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "official_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "collection_status": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "field_provenance": {
+          "$ref": "#/$defs/fieldProvenanceMap"
+        }
+      }
+    },
+    "hotelRate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "room_class",
+        "rate",
+        "rate_basis"
+      ],
+      "properties": {
+        "room_class": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "rate": {
+          "$ref": "#/$defs/money"
+        },
+        "rate_basis": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "hotel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "conference_id",
+        "organization_id",
+        "venue_id",
+        "canonical_name",
+        "postal_address",
+        "locality",
+        "administrative_area",
+        "country",
+        "postal_code",
+        "official_website",
+        "booking_url",
+        "rates",
+        "booking_deadline",
+        "conference_relationship",
+        "relationship_to_venue",
+        "collection_status",
+        "source_ids",
+        "field_provenance"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/hotelId"
+        },
+        "conference_id": {
+          "$ref": "#/$defs/conferenceId"
+        },
+        "organization_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/organizationId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "venue_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/venueId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "canonical_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "postal_address": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "locality": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "administrative_area": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "country": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "postal_code": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "official_website": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "booking_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "rates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/hotelRate"
+          }
+        },
+        "booking_deadline": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "conference_relationship": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "relationship_to_venue": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "collection_status": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "field_provenance": {
+          "$ref": "#/$defs/fieldProvenanceMap"
+        }
+      }
+    },
+    "attendeeRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "conference_id",
+        "record_type",
+        "person_id",
+        "public_professional_role",
+        "organization_id",
+        "aggregate_count",
+        "estimate_min",
+        "estimate_max",
+        "intended_audience",
+        "scope",
+        "authorization_basis",
+        "collection_status",
+        "source_ids",
+        "field_provenance"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/attendeeId"
+        },
+        "conference_id": {
+          "$ref": "#/$defs/conferenceId"
+        },
+        "record_type": {
+          "enum": [
+            "individual-record",
+            "aggregate",
+            "attendance-estimate",
+            "intended-audience"
+          ]
+        },
+        "person_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/personId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "public_professional_role": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "organization_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/organizationId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "aggregate_count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "estimate_min": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "estimate_max": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "intended_audience": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authorization_basis": {
+          "$ref": "#/$defs/collectedDataAuthorizationBasis"
+        },
+        "collection_status": {
+          "$ref": "#/$defs/collectionStatus"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "field_provenance": {
+          "$ref": "#/$defs/fieldProvenanceMap"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "record_type": {
+                "const": "individual-record"
+              }
+            },
+            "required": [
+              "record_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "person_id": {
+                "$ref": "#/$defs/personId"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "record_type": {
+                "const": "aggregate"
+              }
+            },
+            "required": [
+              "record_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "aggregate_count": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_kind",
+        "source_class",
+        "title",
+        "publisher_or_owner",
+        "public_url",
+        "publication_or_update_date",
+        "access_date",
+        "conference_relationship",
+        "bounded_excerpt_or_faithful_summary",
+        "supported_fields_or_claims",
+        "reliability",
+        "independence",
+        "limitations",
+        "review_state",
+        "extraction_eligibility",
+        "observed_listing_only",
+        "related_entities"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/sourceId"
+        },
+        "source_kind": {
+          "enum": [
+            "aggregator",
+            "direct"
+          ]
+        },
+        "source_class": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "publisher_or_owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "public_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "publication_or_update_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "access_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "conference_relationship": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bounded_excerpt_or_faithful_summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "supported_fields_or_claims": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "observed-listing",
+              "identity",
+              "series",
+              "organizers",
+              "description",
+              "dates",
+              "official-url",
+              "people",
+              "committees",
+              "schedule",
+              "registration",
+              "venue",
+              "sponsors",
+              "hotels",
+              "attendance",
+              "provenance",
+              "confidence",
+              "contradictions",
+              "unresolved-fields"
+            ]
+          }
+        },
+        "reliability": {
+          "enum": [
+            "high",
+            "medium",
+            "low",
+            "unresolved"
+          ]
+        },
+        "independence": {
+          "enum": [
+            "first-party",
+            "independent-direct",
+            "syndicated",
+            "unresolved"
+          ]
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "review_state": {
+          "enum": [
+            "reviewed",
+            "partially-reviewed",
+            "inaccessible",
+            "removed",
+            "paywalled",
+            "unresolved"
+          ]
+        },
+        "extraction_eligibility": {
+          "enum": [
+            "eligible",
+            "limited",
+            "ineligible"
+          ]
+        },
+        "observed_listing_only": {
+          "type": "boolean"
+        },
+        "related_entities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entityReference"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "source_kind": {
+                "const": "aggregator"
+              }
+            },
+            "required": [
+              "source_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "id": {
+                "pattern": "^A[0-9]{3,}$"
+              },
+              "observed_listing_only": {
+                "const": true
+              },
+              "extraction_eligibility": {
+                "const": "ineligible"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "id": {
+                "pattern": "^S[0-9]{3,}$"
+              },
+              "observed_listing_only": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "protectedLiteral": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "value",
+        "preserved"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "name",
+            "url",
+            "number",
+            "date",
+            "price",
+            "identifier",
+            "quotation"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "preserved": {
+          "const": true
+        }
+      }
+    },
+    "translation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "entity_type",
+        "entity_id",
+        "field_pointer",
+        "original_text",
+        "source_language",
+        "translated_text",
+        "target_language",
+        "translation_method",
+        "uncertainty",
+        "uncertainty_notes",
+        "protected_literals",
+        "source_ids",
+        "verification_source_ids",
+        "certification_claim"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/translationId"
+        },
+        "entity_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entity_id": {
+          "$ref": "#/$defs/anyEntityId"
+        },
+        "field_pointer": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "original_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_language": {
+          "type": "string",
+          "minLength": 2
+        },
+        "translated_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_language": {
+          "type": "string",
+          "minLength": 2
+        },
+        "translation_method": {
+          "enum": [
+            "llm-generated",
+            "official-source",
+            "human-reviewed"
+          ]
+        },
+        "uncertainty": {
+          "enum": [
+            "none",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "uncertainty_notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "protected_literals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/protectedLiteral"
+          }
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "verification_source_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sourceId"
+          }
+        },
+        "certification_claim": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "translation_method": {
+                "enum": [
+                  "official-source",
+                  "human-reviewed"
+                ]
+              }
+            },
+            "required": [
+              "translation_method"
+            ]
+          },
+          "then": {
+            "properties": {
+              "verification_source_ids": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "comparedCandidateValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entity_id",
+        "value",
+        "source_ids"
+      ],
+      "properties": {
+        "entity_id": {
+          "$ref": "#/$defs/anyEntityId"
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        }
+      }
+    },
+    "comparedAttribute": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attribute",
+        "candidate_values",
+        "comparison_result"
+      ],
+      "properties": {
+        "attribute": {
+          "type": "string",
+          "minLength": 1
+        },
+        "candidate_values": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/comparedCandidateValue"
+          }
+        },
+        "comparison_result": {
+          "enum": [
+            "match",
+            "conflict",
+            "inconclusive"
+          ]
+        }
+      }
+    },
+    "aliasRedirect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_id",
+        "canonical_id",
+        "decision_id"
+      ],
+      "properties": {
+        "original_id": {
+          "$ref": "#/$defs/anyEntityId"
+        },
+        "canonical_id": {
+          "$ref": "#/$defs/anyEntityId"
+        },
+        "decision_id": {
+          "$ref": "#/$defs/entityResolutionId"
+        }
+      }
+    },
+    "entityResolutionDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "decision_type",
+        "outcome",
+        "entity_type",
+        "candidate_entity_ids",
+        "canonical_entity_id",
+        "created_entity_ids",
+        "source_ids",
+        "compared_attributes",
+        "corroborating_evidence",
+        "conflicting_evidence",
+        "confidence",
+        "rationale",
+        "alias_redirects"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/entityResolutionId"
+        },
+        "decision_type": {
+          "enum": [
+            "merge",
+            "split",
+            "alias",
+            "rejected-candidate",
+            "unresolved-candidate"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "applied",
+            "rejected",
+            "unresolved"
+          ]
+        },
+        "entity_type": {
+          "enum": [
+            "conference",
+            "conference-series",
+            "organization",
+            "person",
+            "venue",
+            "session-event",
+            "registration-offer",
+            "sponsor-partnership",
+            "hotel",
+            "attendee",
+            "source"
+          ]
+        },
+        "candidate_entity_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/anyEntityId"
+          }
+        },
+        "canonical_entity_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/anyEntityId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "created_entity_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/anyEntityId"
+          }
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIdArray"
+        },
+        "compared_attributes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/comparedAttribute"
+          }
+        },
+        "corroborating_evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "conflicting_evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "confidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "alias_redirects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/aliasRedirect"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "decision_type": {
+                "const": "rejected-candidate"
+              }
+            },
+            "required": [
+              "decision_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "decision_type": {
+                "const": "unresolved-candidate"
+              }
+            },
+            "required": [
+              "decision_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "const": "unresolved"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "qualityCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "check",
+        "result",
+        "details"
+      ],
+      "properties": {
+        "check": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result": {
+          "enum": [
+            "pass",
+            "fail",
+            "not-run"
+          ]
+        },
+        "details": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "artifactSchemaResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact",
+        "result",
+        "details"
+      ],
+      "properties": {
+        "artifact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result": {
+          "enum": [
+            "pass",
+            "fail",
+            "not-run"
+          ]
+        },
+        "details": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "entityCounts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "conferences",
+        "conference_series",
+        "organizations",
+        "people",
+        "venues",
+        "sessions_and_events",
+        "registration_offers",
+        "sponsors_and_partnerships",
+        "hotels",
+        "attendee_records_or_aggregates",
+        "sources",
+        "translations",
+        "entity_resolution_decisions"
+      ],
+      "properties": {
+        "conferences": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "conference_series": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "organizations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "people": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "venues": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sessions_and_events": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "registration_offers": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sponsors_and_partnerships": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hotels": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "attendee_records_or_aggregates": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sources": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "translations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "entity_resolution_decisions": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "statusCounts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "complete",
+        "partial",
+        "not-published",
+        "not-applicable",
+        "inaccessible",
+        "not-authorized",
+        "unresolved"
+      ],
+      "properties": {
+        "complete": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "partial": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "not-published": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "not-applicable": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "inaccessible": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "not-authorized": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unresolved": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "branchCoverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity_and_aliases",
+        "series_edition_and_acronym",
+        "organizers",
+        "description_themes_topics_type_and_languages",
+        "dates_times_timezone_recurrence_and_status",
+        "websites_and_event_urls",
+        "people_and_public_contacts",
+        "committees_and_roles",
+        "schedule_tracks_sessions_workshops_and_social_events",
+        "registration",
+        "venue",
+        "sponsors_exhibitors_and_partners",
+        "hotels_and_booking",
+        "attendees_and_attendance",
+        "provenance",
+        "confidence",
+        "contradictions",
+        "unresolved_fields"
+      ],
+      "properties": {
+        "identity_and_aliases": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "series_edition_and_acronym": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "organizers": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "description_themes_topics_type_and_languages": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "dates_times_timezone_recurrence_and_status": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "websites_and_event_urls": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "people_and_public_contacts": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "committees_and_roles": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "schedule_tracks_sessions_workshops_and_social_events": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "registration": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "venue": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "sponsors_exhibitors_and_partners": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "hotels_and_booking": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "attendees_and_attendance": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "provenance": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "confidence": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "contradictions": {
+          "$ref": "#/$defs/statusCounts"
+        },
+        "unresolved_fields": {
+          "$ref": "#/$defs/statusCounts"
+        }
+      }
+    },
+    "sourceClassCoverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_class",
+        "reviewed_count",
+        "eligible_count",
+        "conference_ids",
+        "limitations"
+      ],
+      "properties": {
+        "source_class": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewed_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "eligible_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "conference_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/conferenceId"
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "unresolvedReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact",
+        "json_pointer",
+        "referenced_id",
+        "expected_collection",
+        "severity"
+      ],
+      "properties": {
+        "artifact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "json_pointer": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "referenced_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_collection": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "enum": [
+            "blocking",
+            "non-blocking"
+          ]
+        }
+      }
+    },
+    "qualityMetrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_schema_results",
+        "entity_counts",
+        "duplicate_candidates",
+        "resolution_outcomes",
+        "unresolved_foreign_keys",
+        "unresolved_source_references",
+        "branch_coverage",
+        "source_class_coverage",
+        "conferences_without_official_sources",
+        "conflicts",
+        "translation_coverage",
+        "translation_uncertainties",
+        "attendee_privacy_checks",
+        "attendee_authorization_checks",
+        "inaccessible_sources",
+        "collection_gaps",
+        "blocking_warnings",
+        "non_blocking_warnings"
+      ],
+      "properties": {
+        "artifact_schema_results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/artifactSchemaResult"
+          }
+        },
+        "entity_counts": {
+          "$ref": "#/$defs/entityCounts"
+        },
+        "duplicate_candidates": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "resolution_outcomes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "applied",
+            "rejected",
+            "unresolved"
+          ],
+          "properties": {
+            "applied": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "rejected": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unresolved": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "unresolved_foreign_keys": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unresolvedReference"
+          }
+        },
+        "unresolved_source_references": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unresolvedReference"
+          }
+        },
+        "branch_coverage": {
+          "$ref": "#/$defs/branchCoverage"
+        },
+        "source_class_coverage": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceClassCoverage"
+          }
+        },
+        "conferences_without_official_sources": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/conferenceId"
+          }
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/contradiction"
+          }
+        },
+        "translation_coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "translatable_fields",
+            "translated_fields",
+            "llm_generated",
+            "official_source",
+            "human_reviewed",
+            "uncertain"
+          ],
+          "properties": {
+            "translatable_fields": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "translated_fields": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "llm_generated": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "official_source": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "human_reviewed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "uncertain": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "translation_uncertainties": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/translationId"
+          }
+        },
+        "attendee_privacy_checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/qualityCheck"
+          }
+        },
+        "attendee_authorization_checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/qualityCheck"
+          }
+        },
+        "inaccessible_sources": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sourceId"
+          }
+        },
+        "collection_gaps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unresolvedField"
+          }
+        },
+        "blocking_warnings": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "non_blocking_warnings": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

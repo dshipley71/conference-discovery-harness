@@ -1,0 +1,548 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": "RAW_CONFERENCES.json",
+  "data_classification": "illustrative-template",
+  "template_notice": "Illustrative template only. All names, URLs, dates, contacts, prices, and attendance facts below are synthetic and are not live research. Replace the example record with reviewed evidence for the active run.",
+  "run_metadata": {
+    "run_id": "illustrative-template-run",
+    "mode": "full",
+    "source_run_id": null,
+    "objective": "Demonstrate the raw extraction contract without claiming a real conference result.",
+    "extracted_at": "2026-09-22T00:00:00Z",
+    "attendee_mode": "public-only",
+    "output_language": "en",
+    "input_artifacts": [
+      "REQUEST.md",
+      "AGGREGATORS.md",
+      "CONFERENCE_SOURCES.md"
+    ]
+  },
+  "sources": [
+    {
+      "id": "S001",
+      "source_kind": "direct",
+      "candidate_conference_id": "C001",
+      "candidate_conference": "Illustrative Conference Alpha",
+      "source_class": "official-conference",
+      "title": "Illustrative Conference Alpha — Synthetic Source",
+      "publisher_or_owner": "Illustrative Conference Organization",
+      "public_url": "https://conference.example.invalid/",
+      "publication_or_update_date": "2099-01-15",
+      "access_date": "2026-09-22",
+      "conference_relationship": "Synthetic official conference page used only to demonstrate the template structure.",
+      "bounded_excerpt_or_faithful_summary": "Synthetic page content describes an illustrative conference, its program, venue, registration, participants, partners, and lodging.",
+      "supported_fields_or_claims": [
+        "identity",
+        "series",
+        "organizers",
+        "description",
+        "dates",
+        "official-url",
+        "people",
+        "committees",
+        "schedule",
+        "registration",
+        "venue",
+        "sponsors",
+        "hotels",
+        "attendance",
+        "provenance",
+        "confidence",
+        "contradictions",
+        "unresolved-fields"
+      ],
+      "reliability": "high",
+      "independence": "first-party",
+      "limitations": [
+        "Synthetic illustrative source; must not be treated as live evidence."
+      ],
+      "review_state": "reviewed",
+      "extraction_eligibility": "eligible"
+    }
+  ],
+  "conferences": [
+    {
+      "id": "C001",
+      "candidate_key": "illustrative-conference-alpha-2099",
+      "candidate_names": [
+        "Illustrative Conference Alpha",
+        "ICA 2099"
+      ],
+      "branches": {
+        "identity_and_aliases": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "Illustrative Conference Alpha (ICA 2099)",
+              "language": "en",
+              "observed_value": {
+                "name": "Illustrative Conference Alpha",
+                "aliases": [
+                  "ICA 2099"
+                ]
+              },
+              "authorization_basis": null,
+              "notes": "Synthetic identity wording."
+            }
+          ],
+          "notes": null
+        },
+        "series_edition_and_acronym": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/about",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "faithful-summary",
+              "raw_text": "The 12th edition of the Illustrative Conference Series uses the acronym ICA.",
+              "language": "en",
+              "observed_value": {
+                "series": "Illustrative Conference Series",
+                "edition": "12",
+                "acronym": "ICA"
+              },
+              "authorization_basis": null,
+              "notes": "Synthetic series data."
+            }
+          ],
+          "notes": null
+        },
+        "organizers": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/about",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "Organized by Illustrative Conference Organization.",
+              "language": "en",
+              "observed_value": {
+                "organizer": "Illustrative Conference Organization"
+              },
+              "authorization_basis": null,
+              "notes": "Synthetic organizer."
+            }
+          ],
+          "notes": null
+        },
+        "description_themes_topics_type_and_languages": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/about",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "faithful-summary",
+              "raw_text": "An illustrative hybrid conference about reproducible research, presented in English and Spanish.",
+              "language": "en",
+              "observed_value": {
+                "description": "An illustrative hybrid conference about reproducible research.",
+                "themes": [
+                  "reproducible research"
+                ],
+                "topics": [
+                  "data quality"
+                ],
+                "type": "conference",
+                "languages": [
+                  "en",
+                  "es"
+                ]
+              },
+              "authorization_basis": null,
+              "notes": "Synthetic description."
+            }
+          ],
+          "notes": null
+        },
+        "dates_times_timezone_recurrence_and_status": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/program",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "15–16 June 2099, 09:00–17:00 UTC, annual, scheduled.",
+              "language": "en",
+              "observed_value": {
+                "start_date": "2099-06-15",
+                "end_date": "2099-06-16",
+                "start_time": "09:00:00",
+                "end_time": "17:00:00",
+                "timezone": "UTC",
+                "recurrence": "annual",
+                "status": "scheduled"
+              },
+              "authorization_basis": null,
+              "notes": "Synthetic future dates."
+            }
+          ],
+          "notes": null
+        },
+        "websites_and_event_urls": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "Official site: https://conference.example.invalid/; program: https://conference.example.invalid/program",
+              "language": "en",
+              "observed_value": {
+                "official_url": "https://conference.example.invalid/",
+                "event_urls": [
+                  "https://conference.example.invalid/program"
+                ]
+              },
+              "authorization_basis": null,
+              "notes": "Reserved invalid-domain URLs."
+            }
+          ],
+          "notes": null
+        },
+        "people_and_public_contacts": {
+          "collection_status": "partial",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/people",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "faithful-summary",
+              "raw_text": "Alex Example is listed as keynote speaker and Research Director at Example Institute. A business email, alex@example.invalid, is explicitly published.",
+              "language": "en",
+              "observed_value": {
+                "name": "Alex Example",
+                "professional_role": "Research Director",
+                "organization": "Example Institute",
+                "conference_role": "keynote speaker",
+                "business_email": "alex@example.invalid"
+              },
+              "authorization_basis": {
+                "basis": "intentionally-public",
+                "description": "The synthetic official conference source explicitly publishes the professional role and business email.",
+                "source_ids": [
+                  "S001"
+                ],
+                "authorization_record": null
+              },
+              "notes": "Synthetic public professional data."
+            }
+          ],
+          "notes": "Only one illustrative person is represented."
+        },
+        "committees_and_roles": {
+          "collection_status": "partial",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/committee",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "Alex Example — Program Committee Chair.",
+              "language": "en",
+              "observed_value": {
+                "committee": "Program Committee",
+                "person": "Alex Example",
+                "role": "Chair"
+              },
+              "authorization_basis": {
+                "basis": "intentionally-public",
+                "description": "The synthetic official committee page explicitly publishes the professional committee role.",
+                "source_ids": [
+                  "S001"
+                ],
+                "authorization_record": null
+              },
+              "notes": "Synthetic committee role."
+            }
+          ],
+          "notes": "The template shows one committee role."
+        },
+        "schedule_tracks_sessions_workshops_and_social_events": {
+          "collection_status": "partial",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/program",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "15 June 2099, 10:00–11:00 UTC — Reproducible Research Keynote, Main Hall.",
+              "language": "en",
+              "observed_value": {
+                "event_type": "session",
+                "title": "Reproducible Research Keynote",
+                "start": "2099-06-15T10:00:00Z",
+                "end": "2099-06-15T11:00:00Z",
+                "room": "Main Hall"
+              },
+              "authorization_basis": null,
+              "notes": "Synthetic schedule item."
+            }
+          ],
+          "notes": "The complete synthetic agenda is not represented."
+        },
+        "registration": {
+          "collection_status": "partial",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/register",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "Standard ticket: EUR 100. Registration closes 31 May 2099. Open to professional researchers.",
+              "language": "en",
+              "observed_value": {
+                "registration_status": "open",
+                "ticket_class": "Standard",
+                "price": "EUR 100",
+                "deadline": "2099-05-31",
+                "eligibility": "professional researchers",
+                "url": "https://conference.example.invalid/register"
+              },
+              "authorization_basis": null,
+              "notes": "Synthetic registration offer."
+            }
+          ],
+          "notes": "Only one synthetic ticket class is represented."
+        },
+        "venue": {
+          "collection_status": "partial",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/venue",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "Example Convention Centre, 1 Example Way, Example City, EX 1000, Exampleland. Coordinates 10.0000, 20.0000. Main Hall is step-free.",
+              "language": "en",
+              "observed_value": {
+                "name": "Example Convention Centre",
+                "address": "1 Example Way",
+                "locality": "Example City",
+                "administrative_area": "Example Region",
+                "country": "Exampleland",
+                "postal_code": "EX 1000",
+                "latitude": 10.0,
+                "longitude": 20.0,
+                "room": "Main Hall",
+                "accessibility": "step-free",
+                "map_url": "https://maps.example.invalid/example-convention-centre"
+              },
+              "authorization_basis": null,
+              "notes": "Synthetic venue and coordinates."
+            }
+          ],
+          "notes": "Transport details are omitted from the illustrative raw value."
+        },
+        "sponsors_exhibitors_and_partners": {
+          "collection_status": "partial",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/partners",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "Example Institute — Gold Sponsor.",
+              "language": "en",
+              "observed_value": {
+                "organization": "Example Institute",
+                "relationship": "sponsor",
+                "tier": "Gold"
+              },
+              "authorization_basis": null,
+              "notes": "Synthetic sponsor relationship."
+            }
+          ],
+          "notes": "The template shows one sponsor."
+        },
+        "hotels_and_booking": {
+          "collection_status": "partial",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/hotels",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "Example Hotel is the recommended hotel. Illustrative rate: EUR 80 per night. Booking deadline: 15 May 2099.",
+              "language": "en",
+              "observed_value": {
+                "name": "Example Hotel",
+                "relationship": "conference-recommended",
+                "rate": "EUR 80 per night",
+                "booking_deadline": "2099-05-15",
+                "booking_url": "https://hotel.example.invalid/conference"
+              },
+              "authorization_basis": null,
+              "notes": "Synthetic hotel and rate."
+            }
+          ],
+          "notes": "The template shows one hotel."
+        },
+        "attendees_and_attendance": {
+          "collection_status": "partial",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/about",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "The prior illustrative edition had 125 attendees.",
+              "language": "en",
+              "observed_value": {
+                "record_type": "aggregate",
+                "count": 125,
+                "scope": "prior illustrative edition"
+              },
+              "authorization_basis": {
+                "basis": "intentionally-public",
+                "description": "The synthetic official conference source explicitly publishes an aggregate count.",
+                "source_ids": [
+                  "S001"
+                ],
+                "authorization_record": null
+              },
+              "notes": "This aggregate does not prove attendance at the 2099 event."
+            }
+          ],
+          "notes": "No individual attendee record is included."
+        },
+        "provenance": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "faithful-summary",
+              "raw_text": "All illustrative raw values in C001 point to S001 and retain source URLs and capture times.",
+              "language": "en",
+              "observed_value": {
+                "source_ids": [
+                  "S001"
+                ]
+              },
+              "authorization_basis": null,
+              "notes": "Synthetic provenance summary."
+            }
+          ],
+          "notes": null
+        },
+        "confidence": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "faithful-summary",
+              "raw_text": "Illustrative confidence is high because the synthetic source is modeled as first-party; this is not a live reliability assessment.",
+              "language": "en",
+              "observed_value": {
+                "level": "high"
+              },
+              "authorization_basis": null,
+              "notes": "Template-only confidence."
+            }
+          ],
+          "notes": null
+        },
+        "contradictions": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "faithful-summary",
+              "raw_text": "No synthetic contradiction is included in this illustrative record.",
+              "language": "en",
+              "observed_value": [],
+              "authorization_basis": null,
+              "notes": "A live run must preserve all observed contradictions."
+            }
+          ],
+          "notes": null
+        },
+        "unresolved_fields": {
+          "collection_status": "partial",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/venue",
+              "captured_at": "2026-09-22T00:00:00Z",
+              "capture_method": "faithful-summary",
+              "raw_text": "Public transport notes are not included in the synthetic page.",
+              "language": "en",
+              "observed_value": {
+                "field": "venue transport notes",
+                "condition": "not published"
+              },
+              "authorization_basis": null,
+              "notes": "Illustrative collection gap."
+            }
+          ],
+          "notes": "The unresolved-field list preserves the gap explicitly."
+        }
+      },
+      "source_ids": [
+        "S001"
+      ],
+      "field_provenance": {
+        "/candidate_names": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_evidence_pointers": [
+            "/conferences/0/branches/identity_and_aliases/raw_values/0"
+          ],
+          "note": "Synthetic identity evidence."
+        },
+        "/branches/dates_times_timezone_recurrence_and_status": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_evidence_pointers": [
+            "/conferences/0/branches/dates_times_timezone_recurrence_and_status/raw_values/0"
+          ],
+          "note": "Synthetic date evidence."
+        },
+        "/branches/people_and_public_contacts": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_evidence_pointers": [
+            "/conferences/0/branches/people_and_public_contacts/raw_values/0"
+          ],
+          "note": "Synthetic public professional evidence with an authorization basis."
+        },
+        "/branches/attendees_and_attendance": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_evidence_pointers": [
+            "/conferences/0/branches/attendees_and_attendance/raw_values/0"
+          ],
+          "note": "Synthetic public aggregate attendance evidence."
+        }
+      },
+      "contradictions": [],
+      "unresolved_fields": [
+        {
+          "json_pointer": "/branches/venue/raw_values/0/observed_value/transport_notes",
+          "reason": "The synthetic source does not publish transport notes.",
+          "source_ids": [
+            "S001"
+          ]
+        }
+      ]
+    }
+  ]
+}

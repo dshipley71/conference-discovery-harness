@@ -1,0 +1,315 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": "RAW_CONFERENCES.json",
+  "data_classification": "synthetic-test-fixture",
+  "template_notice": "Synthetic test fixture only. No record, person, organization, URL, date, or attendance fact is live research.",
+  "run_metadata": {
+    "run_id": "valid-run",
+    "mode": "full",
+    "source_run_id": null,
+    "objective": "Validate one synthetic conference record through the complete harness workflow.",
+    "extracted_at": "2026-09-22T00:03:00Z",
+    "attendee_mode": "public-only",
+    "output_language": "en",
+    "input_artifacts": [
+      "REQUEST.md",
+      "AGGREGATORS.md",
+      "CONFERENCE_SOURCES.md"
+    ]
+  },
+  "sources": [
+    {
+      "id": "S001",
+      "source_kind": "direct",
+      "candidate_conference_id": "C001",
+      "candidate_conference": "Synthetic Validation Conference",
+      "source_class": "official-conference",
+      "title": "Synthetic Validation Conference",
+      "publisher_or_owner": "Synthetic Conference Organization",
+      "public_url": "https://conference.example.invalid/",
+      "publication_or_update_date": "2099-01-01",
+      "access_date": "2026-09-22",
+      "conference_relationship": "Synthetic official conference site.",
+      "bounded_excerpt_or_faithful_summary": "The synthetic page identifies the conference, organizer, one professional, and a prior-edition aggregate attendance count.",
+      "supported_fields_or_claims": [
+        "identity",
+        "dates",
+        "official-url",
+        "organizers",
+        "people",
+        "attendance",
+        "provenance",
+        "confidence",
+        "contradictions"
+      ],
+      "reliability": "high",
+      "independence": "first-party",
+      "limitations": [
+        "Synthetic test evidence only."
+      ],
+      "review_state": "reviewed",
+      "extraction_eligibility": "eligible"
+    }
+  ],
+  "conferences": [
+    {
+      "id": "C001",
+      "candidate_key": "synthetic-validation-conference-2099",
+      "candidate_names": [
+        "Synthetic Validation Conference"
+      ],
+      "branches": {
+        "identity_and_aliases": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/",
+              "captured_at": "2026-09-22T00:03:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "Synthetic Validation Conference",
+              "language": "en",
+              "observed_value": {
+                "name": "Synthetic Validation Conference"
+              },
+              "authorization_basis": null,
+              "notes": "Synthetic identity."
+            }
+          ],
+          "notes": null
+        },
+        "series_edition_and_acronym": {
+          "collection_status": "not-published",
+          "raw_values": [],
+          "notes": "The synthetic source does not publish series information."
+        },
+        "organizers": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/about",
+              "captured_at": "2026-09-22T00:03:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "Organized by Synthetic Conference Organization.",
+              "language": "en",
+              "observed_value": {
+                "organizer": "Synthetic Conference Organization"
+              },
+              "authorization_basis": null,
+              "notes": "Synthetic organizer."
+            }
+          ],
+          "notes": null
+        },
+        "description_themes_topics_type_and_languages": {
+          "collection_status": "not-published",
+          "raw_values": [],
+          "notes": "No synthetic description is supplied."
+        },
+        "dates_times_timezone_recurrence_and_status": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/",
+              "captured_at": "2026-09-22T00:03:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "15 June 2099",
+              "language": "en",
+              "observed_value": {
+                "start_date": "2099-06-15",
+                "end_date": "2099-06-15"
+              },
+              "authorization_basis": null,
+              "notes": "Synthetic future date."
+            }
+          ],
+          "notes": null
+        },
+        "websites_and_event_urls": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/",
+              "captured_at": "2026-09-22T00:03:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "Official site: https://conference.example.invalid/",
+              "language": "en",
+              "observed_value": {
+                "official_url": "https://conference.example.invalid/"
+              },
+              "authorization_basis": null,
+              "notes": "Reserved invalid-domain URL."
+            }
+          ],
+          "notes": null
+        },
+        "people_and_public_contacts": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/people",
+              "captured_at": "2026-09-22T00:03:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "Casey Example is the program chair.",
+              "language": "en",
+              "observed_value": {
+                "name": "Casey Example",
+                "conference_role": "program chair"
+              },
+              "authorization_basis": {
+                "basis": "intentionally-public",
+                "description": "The synthetic direct source explicitly publishes the professional conference role.",
+                "source_ids": [
+                  "S001"
+                ],
+                "authorization_record": null
+              },
+              "notes": "Synthetic public professional data."
+            }
+          ],
+          "notes": null
+        },
+        "committees_and_roles": {
+          "collection_status": "not-published",
+          "raw_values": [],
+          "notes": "No separate committee ledger is supplied."
+        },
+        "schedule_tracks_sessions_workshops_and_social_events": {
+          "collection_status": "not-published",
+          "raw_values": [],
+          "notes": "No schedule is supplied."
+        },
+        "registration": {
+          "collection_status": "not-published",
+          "raw_values": [],
+          "notes": "No registration information is supplied."
+        },
+        "venue": {
+          "collection_status": "not-published",
+          "raw_values": [],
+          "notes": "No venue information is supplied."
+        },
+        "sponsors_exhibitors_and_partners": {
+          "collection_status": "not-published",
+          "raw_values": [],
+          "notes": "No sponsor information is supplied."
+        },
+        "hotels_and_booking": {
+          "collection_status": "not-published",
+          "raw_values": [],
+          "notes": "No hotel information is supplied."
+        },
+        "attendees_and_attendance": {
+          "collection_status": "partial",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/about",
+              "captured_at": "2026-09-22T00:03:00Z",
+              "capture_method": "structured-value",
+              "raw_text": "The prior synthetic edition recorded 42 attendees.",
+              "language": "en",
+              "observed_value": {
+                "record_type": "aggregate",
+                "aggregate_count": 42,
+                "scope": "prior synthetic edition"
+              },
+              "authorization_basis": {
+                "basis": "intentionally-public",
+                "description": "The synthetic source explicitly publishes an aggregate count.",
+                "source_ids": [
+                  "S001"
+                ],
+                "authorization_record": null
+              },
+              "notes": "This does not prove attendance at the 2099 conference."
+            }
+          ],
+          "notes": "No individual attendee record is collected."
+        },
+        "provenance": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/",
+              "captured_at": "2026-09-22T00:03:00Z",
+              "capture_method": "faithful-summary",
+              "raw_text": "All material synthetic values cite S001.",
+              "language": "en",
+              "observed_value": {
+                "source_ids": [
+                  "S001"
+                ]
+              },
+              "authorization_basis": null,
+              "notes": null
+            }
+          ],
+          "notes": null
+        },
+        "confidence": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/",
+              "captured_at": "2026-09-22T00:03:00Z",
+              "capture_method": "faithful-summary",
+              "raw_text": "Synthetic confidence is high because the fixture models a reviewed first-party source.",
+              "language": "en",
+              "observed_value": {
+                "level": "high"
+              },
+              "authorization_basis": null,
+              "notes": "Fixture-only assessment."
+            }
+          ],
+          "notes": null
+        },
+        "contradictions": {
+          "collection_status": "complete",
+          "raw_values": [
+            {
+              "source_id": "S001",
+              "source_url": "https://conference.example.invalid/",
+              "captured_at": "2026-09-22T00:03:00Z",
+              "capture_method": "faithful-summary",
+              "raw_text": "No synthetic contradiction is present.",
+              "language": "en",
+              "observed_value": [],
+              "authorization_basis": null,
+              "notes": null
+            }
+          ],
+          "notes": null
+        },
+        "unresolved_fields": {
+          "collection_status": "not-published",
+          "raw_values": [],
+          "notes": "No unresolved conflict is present."
+        }
+      },
+      "source_ids": [
+        "S001"
+      ],
+      "field_provenance": {
+        "/candidate_names/0": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_evidence_pointers": [
+            "/conferences/0/branches/identity_and_aliases/raw_values/0"
+          ],
+          "note": "Synthetic identity provenance."
+        }
+      },
+      "contradictions": [],
+      "unresolved_fields": []
+    }
+  ]
+}

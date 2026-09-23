@@ -1,0 +1,595 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": "NORMALIZED_CONFERENCES.json",
+  "data_classification": "synthetic-test-fixture",
+  "template_notice": "Synthetic test fixture only. No record, person, organization, URL, date, or attendance fact is live research.",
+  "run_metadata": {
+    "run_id": "valid-run",
+    "mode": "full",
+    "source_run_id": null,
+    "objective": "Validate one synthetic conference record through the complete harness workflow.",
+    "normalized_at": "2026-09-22T00:04:00Z",
+    "attendee_mode": "public-only",
+    "output_language": "en",
+    "raw_artifact": "RAW_CONFERENCES.json",
+    "source_artifacts": [
+      "AGGREGATORS.md",
+      "CONFERENCE_SOURCES.md",
+      "RAW_CONFERENCES.json"
+    ]
+  },
+  "conferences": [
+    {
+      "id": "C001",
+      "canonical_name": "Synthetic Validation Conference",
+      "aliases": [],
+      "series_id": null,
+      "edition": null,
+      "acronym": null,
+      "organizer_ids": [
+        "O001"
+      ],
+      "description": null,
+      "themes": [],
+      "topics": [],
+      "conference_type": null,
+      "language_codes": [],
+      "start_date": "2099-06-15",
+      "end_date": "2099-06-15",
+      "start_time": null,
+      "end_time": null,
+      "timezone": null,
+      "recurrence": null,
+      "event_status": null,
+      "official_url": "https://conference.example.invalid/",
+      "event_urls": [],
+      "person_ids": [
+        "P001"
+      ],
+      "committee_memberships": [],
+      "session_event_ids": [],
+      "registration_offer_ids": [],
+      "venue_ids": [],
+      "partnership_ids": [],
+      "hotel_ids": [],
+      "attendee_record_ids": [
+        "AT001"
+      ],
+      "intended_audience": [],
+      "listing_source_ids": [
+        "A001"
+      ],
+      "source_ids": [
+        "S001"
+      ],
+      "translation_ids": [],
+      "entity_resolution_decision_ids": [],
+      "collection_statuses": {
+        "identity_and_aliases": "complete",
+        "series_edition_and_acronym": "not-published",
+        "organizers": "complete",
+        "description_themes_topics_type_and_languages": "not-published",
+        "dates_times_timezone_recurrence_and_status": "complete",
+        "websites_and_event_urls": "complete",
+        "people_and_public_contacts": "complete",
+        "committees_and_roles": "not-published",
+        "schedule_tracks_sessions_workshops_and_social_events": "not-published",
+        "registration": "not-published",
+        "venue": "not-published",
+        "sponsors_exhibitors_and_partners": "not-published",
+        "hotels_and_booking": "not-published",
+        "attendees_and_attendance": "partial",
+        "provenance": "complete",
+        "confidence": "complete",
+        "contradictions": "complete",
+        "unresolved_fields": "not-published"
+      },
+      "confidence": {
+        "level": "high",
+        "rationale": "Fixture-only confidence based on one synthetic first-party source."
+      },
+      "contradictions": [],
+      "unresolved_fields": [],
+      "field_provenance": {
+        "/canonical_name": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/identity_and_aliases/raw_values/0"
+          ],
+          "note": "Synthetic canonical name."
+        },
+        "/organizer_ids/0": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/organizers/raw_values/0"
+          ],
+          "note": null
+        },
+        "/start_date": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/dates_times_timezone_recurrence_and_status/raw_values/0"
+          ],
+          "note": "Synthetic start date."
+        },
+        "/end_date": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/dates_times_timezone_recurrence_and_status/raw_values/0"
+          ],
+          "note": "Synthetic end date."
+        },
+        "/official_url": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/websites_and_event_urls/raw_values/0"
+          ],
+          "note": "Synthetic official conference URL."
+        },
+        "/person_ids/0": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/people_and_public_contacts/raw_values/0"
+          ],
+          "note": "Links to the synthetic public professional."
+        },
+        "/attendee_record_ids/0": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/attendees_and_attendance/raw_values/0"
+          ],
+          "note": "Links to a synthetic public aggregate."
+        },
+        "/confidence": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/confidence/raw_values/0"
+          ],
+          "note": "Synthetic confidence assessment."
+        }
+      }
+    }
+  ],
+  "conference_series": [],
+  "organizations": [
+    {
+      "id": "O001",
+      "canonical_name": "Synthetic Conference Organization",
+      "aliases": [],
+      "organization_types": [
+        "organizer"
+      ],
+      "official_url": null,
+      "public_contacts": [],
+      "source_ids": [
+        "S001"
+      ],
+      "field_provenance": {
+        "/canonical_name": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/organizers/raw_values/0"
+          ],
+          "note": "Synthetic organizer."
+        },
+        "/organization_types/0": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/organizers/raw_values/0"
+          ],
+          "note": "The synthetic source identifies the organization as organizer."
+        }
+      }
+    }
+  ],
+  "people": [
+    {
+      "id": "P001",
+      "name": "Casey Example",
+      "public_professional_role": "Program Chair",
+      "organization_ids": [],
+      "job_title": null,
+      "official_biography": null,
+      "conference_roles": [
+        {
+          "conference_id": "C001",
+          "role": "program chair",
+          "source_ids": [
+            "S001"
+          ]
+        }
+      ],
+      "business_contacts": [],
+      "source_ids": [
+        "S001"
+      ],
+      "field_provenance": {
+        "/name": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/people_and_public_contacts/raw_values/0"
+          ],
+          "note": "Synthetic public professional identity."
+        },
+        "/public_professional_role": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/people_and_public_contacts/raw_values/0"
+          ],
+          "note": "Synthetic public professional role."
+        },
+        "/conference_roles/0": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/people_and_public_contacts/raw_values/0"
+          ],
+          "note": "Synthetic conference role relationship."
+        }
+      }
+    }
+  ],
+  "venues": [],
+  "sessions_and_events": [],
+  "registration_offers": [],
+  "sponsors_and_partnerships": [],
+  "hotels": [],
+  "attendee_records_or_aggregates": [
+    {
+      "id": "AT001",
+      "conference_id": "C001",
+      "record_type": "aggregate",
+      "person_id": null,
+      "public_professional_role": null,
+      "organization_id": null,
+      "aggregate_count": 42,
+      "estimate_min": null,
+      "estimate_max": null,
+      "intended_audience": [],
+      "scope": "prior synthetic edition",
+      "authorization_basis": {
+        "basis": "intentionally-public",
+        "description": "The synthetic direct source explicitly publishes an aggregate count.",
+        "source_ids": [
+          "S001"
+        ],
+        "authorization_record": null
+      },
+      "collection_status": "partial",
+      "source_ids": [
+        "S001"
+      ],
+      "field_provenance": {
+        "/conference_id": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/attendees_and_attendance/raw_values/0"
+          ],
+          "note": "The aggregate belongs to the synthetic conference record."
+        },
+        "/record_type": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/attendees_and_attendance/raw_values/0"
+          ],
+          "note": "The source states an aggregate count."
+        },
+        "/aggregate_count": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/attendees_and_attendance/raw_values/0"
+          ],
+          "note": "Synthetic public aggregate."
+        },
+        "/scope": {
+          "source_ids": [
+            "S001"
+          ],
+          "raw_artifact_pointers": [
+            "/conferences/0/branches/attendees_and_attendance/raw_values/0"
+          ],
+          "note": "Preserves the prior-edition scope and limitation."
+        }
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "A001",
+      "source_kind": "aggregator",
+      "source_class": "aggregator-listing",
+      "title": "Synthetic Aggregator Listing",
+      "publisher_or_owner": "Synthetic Aggregator",
+      "public_url": "https://aggregator.example.invalid/listing/synthetic-validation-conference",
+      "publication_or_update_date": null,
+      "access_date": "2026-09-22",
+      "conference_relationship": "Synthetic observed listing only.",
+      "bounded_excerpt_or_faithful_summary": "The synthetic aggregator displays the conference title.",
+      "supported_fields_or_claims": [
+        "observed-listing"
+      ],
+      "reliability": "medium",
+      "independence": "independent-direct",
+      "limitations": [
+        "Synthetic test evidence only."
+      ],
+      "review_state": "reviewed",
+      "extraction_eligibility": "ineligible",
+      "observed_listing_only": true,
+      "related_entities": [
+        {
+          "entity_type": "conference",
+          "entity_id": "C001"
+        }
+      ]
+    },
+    {
+      "id": "S001",
+      "source_kind": "direct",
+      "source_class": "official-conference",
+      "title": "Synthetic Validation Conference",
+      "publisher_or_owner": "Synthetic Conference Organization",
+      "public_url": "https://conference.example.invalid/",
+      "publication_or_update_date": "2099-01-01",
+      "access_date": "2026-09-22",
+      "conference_relationship": "Synthetic official conference site.",
+      "bounded_excerpt_or_faithful_summary": "The synthetic page identifies the conference, organizer, one professional, and a prior-edition aggregate attendance count.",
+      "supported_fields_or_claims": [
+        "identity",
+        "dates",
+        "official-url",
+        "organizers",
+        "people",
+        "attendance",
+        "provenance",
+        "confidence",
+        "contradictions"
+      ],
+      "reliability": "high",
+      "independence": "first-party",
+      "limitations": [
+        "Synthetic test evidence only."
+      ],
+      "review_state": "reviewed",
+      "extraction_eligibility": "eligible",
+      "observed_listing_only": false,
+      "related_entities": [
+        {
+          "entity_type": "conference",
+          "entity_id": "C001"
+        },
+        {
+          "entity_type": "organization",
+          "entity_id": "O001"
+        },
+        {
+          "entity_type": "person",
+          "entity_id": "P001"
+        },
+        {
+          "entity_type": "attendee",
+          "entity_id": "AT001"
+        }
+      ]
+    }
+  ],
+  "translations": [],
+  "entity_resolution_decisions": [],
+  "alias_redirects": [],
+  "quality_metrics": {
+    "artifact_schema_results": [
+      {
+        "artifact": "RAW_CONFERENCES.json",
+        "result": "pass",
+        "details": "Synthetic fixture is schema-conformant."
+      },
+      {
+        "artifact": "NORMALIZED_CONFERENCES.json",
+        "result": "pass",
+        "details": "Synthetic fixture is schema-conformant."
+      }
+    ],
+    "entity_counts": {
+      "conferences": 1,
+      "conference_series": 0,
+      "organizations": 1,
+      "people": 1,
+      "venues": 0,
+      "sessions_and_events": 0,
+      "registration_offers": 0,
+      "sponsors_and_partnerships": 0,
+      "hotels": 0,
+      "attendee_records_or_aggregates": 1,
+      "sources": 2,
+      "translations": 0,
+      "entity_resolution_decisions": 0
+    },
+    "duplicate_candidates": 0,
+    "resolution_outcomes": {
+      "applied": 0,
+      "rejected": 0,
+      "unresolved": 0
+    },
+    "unresolved_foreign_keys": [],
+    "unresolved_source_references": [],
+    "branch_coverage": {
+      "identity_and_aliases": {"complete": 1, "partial": 0, "not-published": 0, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "series_edition_and_acronym": {"complete": 0, "partial": 0, "not-published": 1, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "organizers": {"complete": 1, "partial": 0, "not-published": 0, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "description_themes_topics_type_and_languages": {"complete": 0, "partial": 0, "not-published": 1, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "dates_times_timezone_recurrence_and_status": {"complete": 1, "partial": 0, "not-published": 0, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "websites_and_event_urls": {"complete": 1, "partial": 0, "not-published": 0, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "people_and_public_contacts": {"complete": 1, "partial": 0, "not-published": 0, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "committees_and_roles": {"complete": 0, "partial": 0, "not-published": 1, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "schedule_tracks_sessions_workshops_and_social_events": {"complete": 0, "partial": 0, "not-published": 1, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "registration": {"complete": 0, "partial": 0, "not-published": 1, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "venue": {"complete": 0, "partial": 0, "not-published": 1, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "sponsors_exhibitors_and_partners": {"complete": 0, "partial": 0, "not-published": 1, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "hotels_and_booking": {"complete": 0, "partial": 0, "not-published": 1, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "attendees_and_attendance": {"complete": 0, "partial": 1, "not-published": 0, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "provenance": {"complete": 1, "partial": 0, "not-published": 0, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "confidence": {"complete": 1, "partial": 0, "not-published": 0, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "contradictions": {"complete": 1, "partial": 0, "not-published": 0, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0},
+      "unresolved_fields": {"complete": 0, "partial": 0, "not-published": 1, "not-applicable": 0, "inaccessible": 0, "not-authorized": 0, "unresolved": 0}
+    },
+    "source_class_coverage": [
+      {
+        "source_class": "aggregator-listing",
+        "reviewed_count": 1,
+        "eligible_count": 0,
+        "conference_ids": [
+          "C001"
+        ],
+        "limitations": [
+          "Supports only the synthetic observed-listing claim."
+        ]
+      },
+      {
+        "source_class": "official-conference",
+        "reviewed_count": 1,
+        "eligible_count": 1,
+        "conference_ids": [
+          "C001"
+        ],
+        "limitations": [
+          "Synthetic direct source only."
+        ]
+      }
+    ],
+    "conferences_without_official_sources": [],
+    "conflicts": [],
+    "translation_coverage": {
+      "translatable_fields": 0,
+      "translated_fields": 0,
+      "llm_generated": 0,
+      "official_source": 0,
+      "human_reviewed": 0,
+      "uncertain": 0
+    },
+    "translation_uncertainties": [],
+    "attendee_privacy_checks": [
+      {
+        "check": "No individual attendee or private registration data is present.",
+        "result": "pass",
+        "details": "The fixture contains one synthetic aggregate."
+      }
+    ],
+    "attendee_authorization_checks": [
+      {
+        "check": "Aggregate attendance evidence is intentionally public.",
+        "result": "pass",
+        "details": "AT001 cites S001 and records an intentionally-public basis."
+      }
+    ],
+    "inaccessible_sources": [],
+    "collection_gaps": [
+      {
+        "json_pointer": "/conferences/0/collection_statuses/series_edition_and_acronym",
+        "condition": "not-published",
+        "reason": "The synthetic source does not publish series, edition, or acronym data.",
+        "source_ids": [
+          "S001"
+        ]
+      },
+      {
+        "json_pointer": "/conferences/0/collection_statuses/description_themes_topics_type_and_languages",
+        "condition": "not-published",
+        "reason": "The synthetic source does not publish descriptive classification data.",
+        "source_ids": [
+          "S001"
+        ]
+      },
+      {
+        "json_pointer": "/conferences/0/collection_statuses/committees_and_roles",
+        "condition": "not-published",
+        "reason": "The synthetic source does not publish a separate committee ledger.",
+        "source_ids": [
+          "S001"
+        ]
+      },
+      {
+        "json_pointer": "/conferences/0/collection_statuses/schedule_tracks_sessions_workshops_and_social_events",
+        "condition": "not-published",
+        "reason": "The synthetic source does not publish a schedule.",
+        "source_ids": [
+          "S001"
+        ]
+      },
+      {
+        "json_pointer": "/conferences/0/collection_statuses/registration",
+        "condition": "not-published",
+        "reason": "The synthetic source does not publish registration data.",
+        "source_ids": [
+          "S001"
+        ]
+      },
+      {
+        "json_pointer": "/conferences/0/collection_statuses/venue",
+        "condition": "not-published",
+        "reason": "The synthetic source does not publish venue data.",
+        "source_ids": [
+          "S001"
+        ]
+      },
+      {
+        "json_pointer": "/conferences/0/collection_statuses/sponsors_exhibitors_and_partners",
+        "condition": "not-published",
+        "reason": "The synthetic source does not publish sponsor or partner data.",
+        "source_ids": [
+          "S001"
+        ]
+      },
+      {
+        "json_pointer": "/conferences/0/collection_statuses/hotels_and_booking",
+        "condition": "not-published",
+        "reason": "The synthetic source does not publish hotel or booking data.",
+        "source_ids": [
+          "S001"
+        ]
+      },
+      {
+        "json_pointer": "/conferences/0/collection_statuses/unresolved_fields",
+        "condition": "not-published",
+        "reason": "The synthetic source does not publish unresolved-field data.",
+        "source_ids": [
+          "S001"
+        ]
+      }
+    ],
+    "blocking_warnings": [],
+    "non_blocking_warnings": [
+      "All fixture content is synthetic."
+    ]
+  }
+}
